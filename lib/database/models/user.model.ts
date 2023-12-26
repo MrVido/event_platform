@@ -7,6 +7,8 @@ const UserSchema = new Schema({
   firstName: { type: String, required: true },
   lastName: {type: String, required: true },
   photo: { type: String, required: true },
+  following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 })
 
 const User = models.User || model('User', UserSchema);

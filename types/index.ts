@@ -13,11 +13,13 @@ export type UpdateUserParams = {
   lastName: string
   username: string
   photo: string
+  groupId?: string
 }
 
 // ====== EVENT PARAMS
 export type CreateEventParams = {
   userId: string
+  groupId: string
   event: {
     title: string
     description: string
@@ -35,6 +37,7 @@ export type CreateEventParams = {
 
 export type UpdateEventParams = {
   userId: string
+  groupId: string
   event: {
     _id: string
     title: string
@@ -65,12 +68,14 @@ export type GetAllEventsParams = {
 
 export type GetEventsByUserParams = {
   userId: string
+  groupId?: string
   limit?: number
   page: number
 }
 
 export type GetRelatedEventsByCategoryParams = {
   categoryId: string
+  groupId?: string
   eventId: string
   limit?: number
   page: number | string
@@ -78,6 +83,7 @@ export type GetRelatedEventsByCategoryParams = {
 
 export type Event = {
   _id: string
+  groupId?: string
   title: string
   description: string
   price: string
@@ -95,6 +101,7 @@ export type Event = {
   category: {
     _id: string
     name: string
+    groupId?: string
   }
 }
 
@@ -106,6 +113,7 @@ export type CreateCategoryParams = {
 // ====== ORDER PARAMS
 export type CheckoutOrderParams = {
   eventTitle: string
+  groupId?: string
   eventId: string
   price: string
   isFree: boolean
@@ -127,6 +135,7 @@ export type GetOrdersByEventParams = {
 
 export type GetOrdersByUserParams = {
   userId: string | null
+  groupId?: string
   limit?: number
   page: string | number | null
 }

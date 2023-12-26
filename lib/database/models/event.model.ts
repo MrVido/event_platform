@@ -2,6 +2,7 @@ import { Document, Schema, model, models } from "mongoose";
 
 export interface IEvent extends Document {
   _id: string;
+  groupId: string,
   title: string;
   description?: string;
   location?: string;
@@ -18,6 +19,7 @@ export interface IEvent extends Document {
 
 const EventSchema = new Schema({
   title: { type: String, required: true },
+  groupId: { type: String, required: true },
   description: { type: String },
   location: { type: String },
   createdAt: { type: Date, default: Date.now },
@@ -29,6 +31,7 @@ const EventSchema = new Schema({
   url: { type: String },
   category: { type: Schema.Types.ObjectId, ref: 'Category' },
   organizer: { type: Schema.Types.ObjectId, ref: 'User' },
+  group: { type: Schema.Types.ObjectId, ref: 'Group' },
 })
 
 const Event = models.Event || model('Event', EventSchema);

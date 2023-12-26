@@ -27,14 +27,15 @@ type EventFormProps = {
   userId: string
   type: "Create" | "Update"
   event?: IEvent,
-  eventId?: string
+  eventId?: string,
+  groupId?: string,
 }
 
-const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
+const EventForm = ({ userId, type, event, eventId, groupId }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([])
   const initialValues = event && type === 'Update' 
     ? { 
-      ...event, 
+      ...event,  
       startDateTime: new Date(event.startDateTime), 
       endDateTime: new Date(event.endDateTime) 
     }
@@ -65,6 +66,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
       try {
         const newEvent = await createEvent({
           event: { ...values, imageUrl: uploadedImageUrl },
+          groupId: groupId || 'default-group-id',
           userId,
           path: '/profile'
         })
@@ -86,7 +88,9 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
 
       try {
         const updatedEvent = await updateEvent({
+            
           userId,
+          groupId: groupId || 'default-group-id',
           event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
           path: `/events/${eventId}`
         })

@@ -171,3 +171,43 @@ export async function getRelatedEventsByCategory({
     handleError(error)
   }
 }
+// Create Event with Group Association
+export async function createEventWithGroup(createEventParams: CreateEventParams) {
+  try {
+    await connectToDatabase();
+
+    // Destructure and include groupId in the parameters
+    const { userId, event, groupId, path } = createEventParams;
+
+    // Create the event
+    const newEvent = await Event.create({ ...event, organizer: userId, group: groupId });
+    revalidatePath(path);
+
+    return JSON.parse(JSON.stringify(newEvent));
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+
+// Update Event with Group Association
+export async function updateEventWithGroup(updateEventParams: UpdateEventParams) {
+  try {
+    await connectToDatabase();
+
+    // Destructure and include groupId in the parameters
+    const { userId, event, groupId, path } = updateEventParams;
+
+    // Update the event
+    const updatedEvent = await Event.findByIdAndUpdate(
+      event._id,
+      { ...event, organizer: userId, group: groupId },
+      { new: true }
+    );
+    revalidatePath(path);
+
+    return JSON.parse(JSON.stringify(updatedEvent));
+  } catch (error) {
+    handleError(error);
+  }
+}

@@ -14,6 +14,7 @@ export const headerLinks = [
 ]
 
 export const eventDefaultValues = {
+  groupId: "",
   title: '',
   description: '',
   location: '',

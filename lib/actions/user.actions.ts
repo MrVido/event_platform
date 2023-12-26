@@ -79,3 +79,35 @@ export async function deleteUser(clerkId: string) {
     handleError(error)
   }
 }
+export async function followUser(userId: string, targetUserId: string) {
+  try {
+    await connectToDatabase();
+
+    // Add target user to user's following list
+    await User.findByIdAndUpdate(userId, { $addToSet: { following: targetUserId } });
+
+    // Add user to target user's followers list
+    await User.findByIdAndUpdate(targetUserId, { $addToSet: { followers: userId } });
+
+    return { message: 'Followed successfully' };
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+// Unfollow a User
+export async function unfollowUser(userId: string, targetUserId: string) {
+  try {
+    await connectToDatabase();
+
+    // Remove target user from user's following list
+    await User.findByIdAndUpdate(userId, { $pull: { following: targetUserId } });
+
+    // Remove user from target user's followers list
+    await User.findByIdAndUpdate(targetUserId, { $pull: { followers: userId } });
+
+    return { message: 'Unfollowed successfully' };
+  } catch (error) {
+    handleError(error);
+  }
+}
