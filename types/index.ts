@@ -156,3 +156,49 @@ export type SearchParamProps = {
   params: { id: string }
   searchParams: { [key: string]: string | string[] | undefined }
 }
+
+// ====== GROUP PARAMS
+export type CreateGroupParams = {
+  name: string;
+  description: string;
+  isPrivate: boolean;
+  createdBy: string;
+};
+
+export type UpdateGroupParams = {
+  groupId: string;
+  name?: string;
+  description?: string;
+  isPrivate?: boolean;
+};
+
+export type JoinGroupParams = {
+  userId: string;
+  groupId: string;
+};
+
+export type LeaveGroupParams = {
+  userId: string;
+  groupId: string;
+};
+
+// ====== SEARCH PARAMS
+export type UserSearchParams = {
+  query: string;
+};
+
+// ====== FOLLOW PARAMS
+export type FollowUserParams = {
+  followerId: string; // ID of the user who is following
+  followingId: string; // ID of the user to be followed
+};
+
+export type UnfollowUserParams = {
+  followerId: string;
+  followingId: string;
+};
+
+// ====== QR CODE PARAMS
+export type GenerateQRCodeParams = {
+  data: string; // Data to be encoded in the QR code, e.g., URL
+};

@@ -1,27 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { followUser, unfollowUser } from '@/lib/actions/user.actions'; // Adjust import paths as needed
 
 interface FollowButtonProps {
-  userId: string;
-  targetUserId: string;
-  isFollowing: boolean;
+  currentUserId: string;
+  profileUserId: string;
+  initialIsFollowing: boolean;
 }
 
-const FollowButton: React.FC<FollowButtonProps> = ({ userId, targetUserId, isFollowing }) => {
-  const [following, setFollowing] = useState(isFollowing);
+const FollowButton: React.FC<FollowButtonProps> = ({ currentUserId, profileUserId, initialIsFollowing }) => {
+  const [isFollowing, setIsFollowing] = useState(initialIsFollowing);
 
   const handleFollow = async () => {
-    // Implement followUser API call
-    setFollowing(true);
+    await followUser(currentUserId, profileUserId);
+    setIsFollowing(true);
   };
 
   const handleUnfollow = async () => {
-    // Implement unfollowUser API call
-    setFollowing(false);
+    await unfollowUser(currentUserId, profileUserId);
+    setIsFollowing(false);
   };
 
   return (
-    <button onClick={following ? handleUnfollow : handleFollow}>
-      {following ? 'Unfollow' : 'Follow'}
+    <button onClick={isFollowing ? handleUnfollow : handleFollow}>
+      {isFollowing ? 'Unfollow' : 'Follow'}
     </button>
   );
 };
